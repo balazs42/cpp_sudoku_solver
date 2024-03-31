@@ -315,3 +315,120 @@ bool Sudoku::checkForPairs()
 	}
 	return true;
 }
+
+vector<Cell>& Sudoku::getRegionVector(const size_t& idx)
+{
+	vector<Cell> retVec;
+
+	std::pair<unsigned, unsigned> reg;
+
+	switch (idx)
+	{
+		case 0:
+			reg = { 0, 0 };
+			break;
+		case 1:
+			reg = { 0, 1 };
+			break;
+		case 2:
+			reg = { 0, 2 };
+			break;
+		case 3:
+			reg = { 1, 0 };
+			break;
+		case 4:
+			reg = { 1, 1 };
+			break;
+		case 5:
+			reg = { 1, 2 };
+			break;
+		case 6:
+			reg = { 2, 0 };
+			break;
+		case 7:
+			reg = { 2, 1 };
+			break;
+		case 8:
+			reg = { 2, 2 };
+			break;
+		default:
+			std::cerr << "Invalid region!\n";
+			break;
+	}
+
+	for (unsigned i = 0; i < row; i++)
+		for (unsigned j = 0; j < col; j++)
+			if (grid[i][j].getRegion() == reg)
+				retVec.push_back(grid[i][j]);
+	return retVec;
+}
+
+Cell* Sudoku::getRegion(const size_t& idx)
+{
+	vector<Cell> tmp = getRegionVector(idx);
+	Cell* cells = new Cell[tmp.size()];
+	for (unsigned i = 0; i < tmp.size(); i++)
+		cells[i] = tmp[i];
+	return cells;
+}
+
+vector<Cell>& Sudoku::getRegionVector(const size_t& idx1, const size_t& idx2)
+{
+	vector<Cell> retVec;
+	std::pair<unsigned, unsigned> reg = { idx1, idx2 };
+
+	for (unsigned i = 0; i < row; i++)
+		for (unsigned j = 0; j < col; j++)
+			if (grid[i][j].getRegion() == reg)
+				retVec.push_back(grid[i][j]);
+
+	return retVec;
+}
+
+Cell* Sudoku::getRegion(const size_t& idx1, const size_t& idx2)
+{
+	vector<Cell> tmp = getRegionVector(idx1, idx2);
+	Cell* cells = new Cell[tmp.size()];
+	for (unsigned i = 0; i < tmp.size(); i++)
+		cells[i] = tmp[i];
+	return cells;
+}
+
+void Sudoku::solve()
+{
+	unsigned counter = 0;
+	while (!checkEnd())
+	{
+		checkForPairs();
+
+		std::cout << "Iteration number: " << counter++ << std::endl;
+		singleFinder();
+		print();
+
+		std::cout << "Iteration number: " << counter++ << std::endl;
+		checkLoners();
+		print();
+	}
+}
+
+bool Sudoku::sameRow(const Cell& c1, const Cell& c2) const
+{
+	return (c1.getRow() == c2.getRow());
+}
+
+bool Sudoku::sameCol(const Cell& c1, const Cell& c2) const
+{
+	return (c1.getCol() == c2.getCol());
+}
+
+bool Sudoku::sameReg(const Cell& c1, const Cell& c2) const
+{
+	return (c1.getReg() == c2.getReg());
+}
+
+bool Sudoku::same(const Cell& c1, const Cell& c2) const
+{
+	return (sameRow(c1, c2) && sameCol(c1, c2) && sameReg(c1, c2));
+}
+
+// Tuple in row or coll should set the whole row and col candidates to false

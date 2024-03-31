@@ -30,28 +30,19 @@ public:
 
 	bool checkLoners();
 
-	void solve()
-	{
-		unsigned counter = 0;
-		while (!checkEnd())
-		{
-			checkForPairs();
-
-			std::cout << "Iteration number: " << counter++ << std::endl;
-			singleFinder();
-			print();
-			
-			std::cout << "Iteration number: " << counter++ << std::endl;
-			checkLoners();
-			print();
-		}
-	}
+	void solve();
 
 	void readIn(const std::string& s);
 	void print() const;
 
+	vector<Cell>& getRegionVector(const size_t& idx);
+	Cell* getRegion(const size_t& idx);
+	vector<Cell>& getRegionVector(const size_t& idx1, const size_t& idx2);
+	Cell* getRegion(const size_t& idx1, const size_t& idx2);
+
+	bool sameRow(const Cell& c1, const Cell& c2) const;
+	bool sameCol(const Cell& c1, const Cell& c2) const;
+	bool sameReg(const Cell& c1, const Cell& c2) const;
+	bool same(const Cell& c1, const Cell& c2) const;
 };
-
-
-
 #endif
