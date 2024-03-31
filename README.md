@@ -1,7 +1,7 @@
 # Sudoku Solver
 
 ## Introduction
-This Sudoku Solver is a C++ project that demonstrates how to solve Sudoku puzzles using common solving techniques. It utilizes a `Cell` class to represent individual cells in the puzzle and a `Sudoku` class to handle the grid and solving logic.
+This Sudoku Solver is a C++ project that demonstrates how to solve Sudoku puzzles using common solving techniques. It utilizes a `Cell` class to represent individual cells in the puzzle and a `Sudoku` class to handle the grid and solving logic. Currently Easy - Hard sudokus can be solved using this project, but we're planning to improve the functionality, with optimizing current techniques, and adding solving techniques to the project, that are currently not implemented. If the sudoku can not be solved by the program, than it will be stuck in an endless loop.
 
 ## Features
 - Load Sudoku puzzles from a string input.
